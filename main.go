@@ -17,7 +17,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-  "html"
 	"os"
 	"strconv"
 	"strings"
@@ -37,10 +36,6 @@ type invoicer struct {
 }
 
 func main() {
-  escaped := html.EscapeString(
-    `<script type='text/javascript'>alert('xss');</script>`)
-  fmt.Println(escaped)
-
 	var (
 		iv  invoicer
 		err error
@@ -117,6 +112,10 @@ type Charge struct {
 	Type        string  `json:"type"`
 	Amount      float64 `json:"amount"`
 	Description string  `json:"description"`
+}
+
+func getIndex(w http.ResponseWriter, r *http.Request) {
+  w.Header().Add("Content-Security-Policy", "default-src 'self';")
 }
 
 func (iv *invoicer) getInvoice(w http.ResponseWriter, r *http.Request) {
