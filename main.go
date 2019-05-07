@@ -116,6 +116,7 @@ type Charge struct {
 
 func getIndex(w http.ResponseWriter, r *http.Request) {
   w.Header().Add("Content-Security-Policy", "default-src 'self';")
+  w.Header().Add("X-Content-Type-Options", "default-src 'self';")
 }
 
 func (iv *invoicer) getInvoice(w http.ResponseWriter, r *http.Request) {
